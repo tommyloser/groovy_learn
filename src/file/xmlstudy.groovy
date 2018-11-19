@@ -39,9 +39,12 @@ def xmlSluper = new XmlSlurper()
 def responser = xmlSluper.parseText(xml)
 
 println responser.value.books[0].book[0].title.text()
-println responser.value.books[0].book[0].author.text()
-println responser.value.books[1].book[0].@available
+println responser.value.books[0].book[0].author.text() //内容
+println responser.value.books[1].book[0].@available //属性
 
+/**
+ * xml 查找作者为李刚的书名
+ */
 def list = []
 responser.value.books.each { books ->
     //对book遍历
@@ -55,14 +58,21 @@ responser.value.books.each { books ->
 }
 
 //println list.toListString()
+
+/**
+ * 方法二， 深度遍历
+ */
 // 深度遍历xml 数据
-//def titles = responser.depthFirst().findAll {
-def titles = responser.'**'.findAll {//'**' 就是depthFirst
-    book ->
+def titles = responser.depthFirst().findAll {
+//def titles = responser.'**'.findAll {//'**' 就是depthFirst
+    book -> //变量xml所有的的book 节点
         return book.author.text() == '李刚' ? true : false
 }
 println titles.toListString()
 
+/**
+ * 方法三，广度遍历
+ */
 //广度遍历
 //def name = responser.value.books.children().findAll {
 def name = responser.value.books.'*'.findAll {//'*' 就是children()
@@ -74,12 +84,15 @@ def name = responser.value.books.'*'.findAll {//'*' 就是children()
 
 println name
 
+
+
 /**
  * 生成xml格式数据
+ * MarkupBuilder
  * <langs type='current' count='3' mainstream='true'>
- <language flavor='static' version='1.5'>Java</language>
- <language flavor='dynamic' version='1.6.0'>Groovy</language>
- <language flavor='dynamic' version='1.9'>JavaScript</language>
+    <language flavor='static' version='1.5'>Java</language>
+    <language flavor='dynamic' version='1.6.0'>Groovy</language>
+    <language flavor='dynamic' version='1.9'>JavaScript</language>
  </langs>
  */
 def sw = new StringWriter()
@@ -87,10 +100,10 @@ def xmlBuilder = new MarkupBuilder(sw)//用来生成xml数据
 ////根节点 langs
 //xmlBuilder.langs(type: 'current', count: '3', mainstream: 'true'){
 //    //第一个节点
-//    language(flavor: 'static', version: '1.5',  ){
+//    language(flavor: 'static', version: '1.5'  ){
 //        age('16')
 //    }
-//    language(flavor: 'dynamic', version: '1.6.0',  ){
+//    language(flavor: 'dynamic', version: '1.6.0'  ){
 //        age('10')
 //    }
 //    language(flavor: 'dynamic', version: '1.9','JavaScript')
@@ -98,9 +111,12 @@ def xmlBuilder = new MarkupBuilder(sw)//用来生成xml数据
 
 //println sw
 
+/**
+ * 实体类数据改写xml 数据
+ */
 def langs = new Langs()
 xmlBuilder.langs(type: langs.type, count: langs.count, mainstream: langs.mainstream) {
-    //遍历所有节点
+    //遍历langs 对象所有节点
     langs.languages.each { lang ->
         language(flavor: lang.flavor, version: lang.version, lang.value)
     }

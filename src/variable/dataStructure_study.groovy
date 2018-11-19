@@ -8,6 +8,27 @@ def array = [1,2,3,4,5] as int[] // 定义int 数组
 int[] array2 = [1, 2, 3, 4, 5] //定义int 数组2
 
 /**
+ * list 的添加元素
+ */
+list.add(6)
+list.leftShift(7)
+list << 8 //leftShift 操作符
+println list.toListString()
+def plusList = list +9
+println plusList.toListString()
+
+/**
+ * list 的删除操作
+ */
+//list.remove(7)
+//list.remove((Object)7)
+//list.removeAt(7)
+//list.removeElement(6)
+//list.removeAll {return it%2 == 0}
+println list - [6,7]//删除列表
+//println list.toListString()
+
+/**
  * 列表的操作, 排序
  */
 def sortList = [6, -3, 9, 2, -7, 1, 5]

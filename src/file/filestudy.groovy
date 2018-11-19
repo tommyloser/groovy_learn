@@ -17,17 +17,20 @@ def file = new File('../../Hello Groovy.iml')//回退两步
 //println result.toListString()
 
 //读取文件部分内容
-def reader = file.withReader { reader ->
-    char[] buffer = new char[100]
-    reader.read(buffer)
-    return buffer
-}
+//def reader = file.withReader { reader ->
+//    char[] buffer = new char[100]
+//    reader.read(buffer)
+//    return buffer
+//}
 //println reader
 
-//def writer = file.withWriter {}
+////写入文件，参考上面
+//def writer = file.withWriter { writer ->
+//    writer.append()
+//}
 
-//def result = copy('../../Hello Groovy.iml', '../../Hello Groovy2.iml')
-//println result
+def result2 = copy('../../Hello Groovy.iml', '../../Hello Groovy2.iml')
+println result2
 def copy(String sourcePath, String destationPath) {
     try {
         // 创建目标文件
@@ -54,6 +57,11 @@ def copy(String sourcePath, String destationPath) {
 
 }
 
+/**
+ * 对象存储
+ * File.withObjectOutputStream
+ * File.withObjectInputStream
+ */
 def person = new Person(name: 'tommy', age : 26)
 //saveObject(person, '../../person.bin')
 def result = (Person)readObject('../../person.bin')
@@ -68,6 +76,7 @@ def saveObject(Object object, String path) {
         if (!desFire.exists()) {
             desFire.createNewFile()
         }
+        //写文件
         desFire.withObjectOutputStream {out ->
             out.writeObject(object)
         }

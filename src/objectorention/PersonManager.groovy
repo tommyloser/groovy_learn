@@ -5,6 +5,6 @@ package objectorention
  */
 class PersonManager {
     static Person createPerson(String name, int age) {
-        return Person.createPerson(name, age)
+        return Person.createPerson(name, age) //静态方法
     }
 }

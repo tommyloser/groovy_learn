@@ -8,8 +8,8 @@ import objectorention.Person
  */
 class ApplicationManager {
     static void init() {
-//        ExpandoMetaClass.enableGlobally()
-        //为第三方类添加方法
+        ExpandoMetaClass.enableGlobally()
+        //为第三方类添加静态方法
         Person.metaClass.static.createPerson = {
             String name, int age ->
                 new Person(name: name, age:age)
